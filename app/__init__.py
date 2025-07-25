@@ -14,7 +14,7 @@ def create_app():
         print(f"Error configuring Gemini API: {e}")
 
 
-    @app.route('/api/mbti-analysis', methods=['POST'])
+    @app.route('/analyse', methods=['POST'])
     def mbti_analysis():
         data = request.get_json()
         if not data:
@@ -42,20 +42,31 @@ def create_app():
 
         **JSON OUTPUT STRUCTURE:**
         {{
-          "mbti_type": "string", // The 4-letter MBTI type (e.g., "INFP")
-          "type_name": "string", // The descriptive name (e.g., "The Mediator")
-          "core_characteristics": "string", // A single, concise paragraph (max 3 sentences).
-          "strengths": ["string", "string", "string"], // Exactly 3 key strengths.
-          "challenges": ["string", "string", "string"], // Exactly 3 potential challenges.
-          "career_paths": ["string", "string", "string"], // Exactly 3 suitable career examples.
-          "summary": "string" // A final, encouraging summary sentence.
+        "mbti_type": "string", // The 4-letter MBTI type (e.g., "INFP")
+        "type_name": "string", // The descriptive name (e.g., "The Mediator")
+        "core_characteristics": "string", // A single, concise paragraph (max 3 sentences).
+        "strengths": ["string", "string", "string"], // Exactly 3 key strengths.
+        "challenges": ["string", "string", "string"], // Exactly 3 potential challenges.
+        "career_paths": ["string", "string", "string"], // Exactly 3 suitable career examples.
+        "famous_people": [  // Exactly 3 well-known people who share the same MBTI type.
+            {{
+            "name": "string", // Full name of the person or fictional character.
+            "description": "string" // Short phrase describing why they are known (e.g., "Theoretical physicist", "Pop singer", "Fictional detective from BBC's Sherlock")
+            }}
+        ],
+        "summary": "string" // A final, encouraging summary sentence.
         }}
+
+        **NOTES FOR famous_people FIELD:**
+        - Include a mix of real people and fictional characters if appropriate.
+        - Prefer globally recognized names (e.g., Albert Einstein, Steve Jobs, Sherlock Holmes, etc.).
+        - Make the descriptions clear and short, max 10 words.
 
         Analyze the data and generate the JSON object now.
         """
 
         try:
-            model = genai.GenerativeModel('gemini-1.5-flash')
+            model = genai.GenerativeModel('gemini-2.0-flash')
             response = model.generate_content(prompt)
             
             # Clean up the response to ensure it's valid JSON
