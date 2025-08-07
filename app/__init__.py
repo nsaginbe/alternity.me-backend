@@ -15,8 +15,10 @@ def create_app():
     # Import and register blueprints
     from .routes.mbti_routes import mbti_bp
     from .routes.animal_routes import animal_bp
+    from .routes.color_routes import color_bp
 
     app.register_blueprint(mbti_bp)
     app.register_blueprint(animal_bp)
+    app.register_blueprint(color_bp)
 
     return app 
