@@ -7,7 +7,7 @@ import json
 
 color_bp = Blueprint('color_bp', __name__)
 
-@color_bp.route('/api/analyze_color', methods=['POST'])
+@color_bp.route('/color', methods=['POST'])
 def analyze_color():
     if not request.is_json:
         return jsonify({"error": "Missing JSON in request"}), 400
