@@ -1,4 +1,6 @@
 Flask
 Flask-Cors
 google-generativeai
-python-dotenv 
+python-dotenv
+Pillow
+requests 
